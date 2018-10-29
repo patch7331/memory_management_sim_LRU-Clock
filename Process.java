@@ -62,15 +62,19 @@ public class Process implements Comparable<Process>{
 
   //Updates frame and deletes executed page line from pageRequests
   public void executeLine(int time) {
-    frameList.get(frameIndex).setUse(0);
-    frameList.get(frameIndex).setLastUsed(time);
-    pageRequests.remove();
+    for(Frame f : frameList) {
+      if(f.getPage() == checkNextPage()) {
+        f.setUse(0);
+        f.setLastUsed(time);
+        pageRequests.remove();
+      }
+    }
   }
 
   //Finds frame to overwrite using LRU Policy
   public void findLastUsedFrame() {
     int lastUsed = Integer.MAX_VALUE;
-    frameIndex = 0;
+    //frameIndex = 0;
     for(int i = 0; i < frameList.size(); i++) {
       if(frameList.get(i).getLastUsed() < lastUsed) {
         lastUsed = frameList.get(i).getLastUsed();

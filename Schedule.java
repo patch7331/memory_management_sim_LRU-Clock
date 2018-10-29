@@ -131,18 +131,19 @@ public abstract class Schedule {
       }
       //CPU has process
       else if(!CPUisEmpty()) {
-        //check is CPU process page is in memory
-        if (getCPUProcess().checkPage() == -1) {
-          getCPUProcess().pageFault(getTime());
-          getBlockQueue().add(sendFromCPU());
-        }
         //process has finish executing
-        else if (getCPUProcess().getPageRequests().isEmpty()) {
+        if (getCPUProcess().getPageRequests().isEmpty()) {
           getCPUProcess().setFinishTime(getTime());
           getCPUProcess().setTimeReady(-1);
           getOutputQueue().offer(getCPUProcess());
           sendToCPU(null);
         }
+        //check is CPU process page is in memory
+        else if (getCPUProcess().checkPage() == -1) {
+          getCPUProcess().pageFault(getTime());
+          getBlockQueue().add(sendFromCPU());
+        }
+
         //quantum has expired and other processes are waiting in queue
         else if (getCPUProcess().getQuantumLeft() == 0 && !getReadyQueue().isEmpty()) {
           getCPUProcess().setTimeReady(getTime());
