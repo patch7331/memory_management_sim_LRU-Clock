@@ -1,9 +1,10 @@
+//mysimulator runs a simple simulation of CPU processing with limited memory using
+//Round Robin scheduling
+//Created by: Adam Crocker, c3192396 for COMP2240
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 public class mysimulator {
 
@@ -13,11 +14,23 @@ public class mysimulator {
       System.out.println("Argument error");
       System.exit(0);
     }
-    int frames = Integer.parseInt(args[0]);
-    int quantum = Integer.parseInt(args[1]);
-    ArrayList<Process> processList = new ArrayList<>();
+    int frames = Integer.parseInt(args[0]); //available memory to be divided among processes
+    int quantum = Integer.parseInt(args[1]);  //time processes will spend in CPU
 
-    int id = 0;
+    //Run sim using Last Recently Used Policy
+    LruPolicy lru = new LruPolicy(frames,quantum, createProcessList(args));
+    lru.run();
+    //Run sim using Clock Policy
+    ClockPolicy cp = new ClockPolicy(frames, quantum, createProcessList(args));
+    cp.run();
+  }
+
+  //Parses file data into Process objects and stores them in a list
+  public static PriorityQueue<Process> createProcessList(String args[])
+      throws IOException {
+    PriorityQueue<Process> processList = new PriorityQueue<>();
+
+    int id = 1;
     for(int i = 2; i < args.length; i++) {
       FileReader fr = new FileReader(args[i]);
       BufferedReader reader = new BufferedReader(fr);
@@ -26,18 +39,31 @@ public class mysimulator {
         System.out.println("Error in file read, 'begin' not found");
         System.exit(0);
       }
-      Process p = new Process(id);
+      Process p = new Process(id,args[i]);
       while(!(line = reader.readLine()).equals("end")) {
         p.addRequest(Integer.parseInt(line));
       }
-      processList.add(p);
+
+      processList.offer(p);
       id++;
     }
-
-    System.out.println("Frames: " + frames);
-    System.out.println("Quantum: " + quantum);
-    for(Process p : processList)
-      p.checkPages();
-
+    return processList;
   }
+
+  //My failed attempt to deep clone the processList instead of parsing the files twice
+  //Feedback/link on why I failed would be appreciated
+  public static PriorityQueue<Process> deepClone(PriorityQueue<Process> pl) {
+    PriorityQueue<Process> cloneList = new PriorityQueue<>();
+    for(Process p : pl) {
+      cloneList.offer(deepCloneProcess(p));
+    }
+    return cloneList;
+  }
+
+  public static Process deepCloneProcess(Process p) {
+    Process newP = new Process(p);
+    return newP;
+  }
+
 }
+
