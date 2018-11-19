@@ -1,7 +1,6 @@
 //ClockPolicy implements the Clock Policy frame management rules into Schedule
 //Calls clock policy related methods in process
 //Frames are overwritten in a circular fashion, like a type of clock array
-//Created by: Adam Crocker, c3192396 for COMP2240
 import java.util.PriorityQueue;
 
 public class ClockPolicy extends Schedule {

@@ -1,12 +1,11 @@
-//c3192396A3 runs a simple simulation of CPU processing with limited memory using
+//A3 runs a simple simulation of CPU processing with limited memory using
 //Round Robin scheduling
-//Created by: Adam Crocker, c3192396 for COMP2240
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.PriorityQueue;
 
-public class c3192396A3 {
+public class A3 {
 
   public static void main(String[] args) throws IOException {
 

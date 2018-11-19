@@ -15,10 +15,6 @@ public class IORequest {
     return page;
   }
 
-  public void setPage(int page) {
-    this.page = page;
-  }
-
   public int getTimeLeft() {
     return timeLeft;
   }

@@ -1,6 +1,5 @@
 //Schedule manages and schedules Process objects attempting to use the CPU using queues
 //Inherited by ClockPolicy and LruPolicy
-//Created by: Adam Crocker, c3192396 for COMP2240
 import java.util.ArrayDeque;
 import java.util.PriorityQueue;
 

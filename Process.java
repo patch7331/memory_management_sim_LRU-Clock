@@ -2,7 +2,6 @@
 //It will keep attempted to access the CPU until pageRequests is empty
 //Each Process has its own list of Frames to access, which is managed based on sim policy
 //When a process tries to execute a page in memory its blocked and issues an IO request
-//Created by: Adam Crocker, c3192396 for COMP2240
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 

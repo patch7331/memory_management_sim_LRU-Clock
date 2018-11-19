@@ -1,7 +1,6 @@
 //LruPolicy implements the Last Recently Used frame management rules into Schedule
 //Calls LRU related methods in process
 //Frames are overwritten based on longest time since accessed
-//Created by: Adam Crocker, c3192396 for COMP2240
 import java.util.PriorityQueue;
 
 public class LruPolicy extends Schedule{
